@@ -1,9 +1,9 @@
 
-def foo():
-    a = "ADAM"
-    def foo2():
-        print(a)
+def foo(a = 0):
+    def foo2(a):
+        return a+1
+    return foo2
 
-    return foo2()
+t = foo(1)
 
-foo()
+print(t)
