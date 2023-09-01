@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup
 def toFixed(numObj, digits=2):
     return float(f"{numObj:.{digits}f}")
 
-
+#Парсер который берет текущий курс валют из сайта
 url = "https://bank.gov.ua/ua/markets/exchangerates"
 
 data = requests.get(url)
