@@ -1,13 +1,15 @@
-#При создания обьектов класса Price просьба использовать сокращение валют
-#такие как предлагаются в таблице на сайте https://bank.gov.ua/ua/markets/exchangerates
-#обьязательно верхний регистр
-#так же не предусмотрено если если обьект класса rice будет в гривнах(лень писать исключения)
+# При создания обьектов класса Price просьба использовать сокращение валют
+# такие как предлагаются в таблице на сайте https://bank.gov.ua/ua/markets/exchangerates
+# обьязательно верхний регистр
+# так же не предусмотрено если если обьект класса rice будет в гривнах(лень писать исключения)
 
 import requests
 from bs4 import BeautifulSoup
 
+
 def toFixed(numObj, digits=2):
     return float(f"{numObj:.{digits}f}")
+
 
 url = "https://bank.gov.ua/ua/markets/exchangerates"
 
@@ -17,16 +19,21 @@ text_from_site = data.text
 
 bs_text_from_site = BeautifulSoup(text_from_site, "html.parser")
 
-name_valut = bs_text_from_site.find_all(attrs={'data-label': 'Код літерний'})
-course = bs_text_from_site.find_all(attrs={'data-label': 'Офіційний курс'})
+name_valut = bs_text_from_site.find_all(attrs={"data-label": "Код літерний"})
+course = bs_text_from_site.find_all(attrs={"data-label": "Офіційний курс"})
 
-#переобразовывает тип всех элементов course из str в float
+# переобразовывает тип всех элементов course из str в float
 exchange_rates = []
 
 for course_element in course:
-    exchange_rate_str = course_element.text.strip()  # Get the text and remove leading/trailing whitespace
-    exchange_rate_float = float(exchange_rate_str.replace(',', '.'))  # Replace ',' with '.' and convert to float
+    exchange_rate_str = (
+        course_element.text.strip()
+    )  # Get the text and remove leading/trailing whitespace
+    exchange_rate_float = float(
+        exchange_rate_str.replace(",", ".")
+    )  # Replace ',' with '.' and convert to float
     exchange_rates.append(exchange_rate_float)
+
 
 class Price:
     def __init__(self, amount: int, currency: str) -> None:
@@ -36,29 +43,29 @@ class Price:
     def __str__(self):
         return "{0} {1}".format(self.amount, self.currency)
 
-    #конвертирует валюты
-    #по скольку я использывал курс относительно гривны то снчала я конвертирую в гривны
-    #после конвертирую в USD
+    # конвертирует валюты
+    # по скольку я использывал курс относительно гривны то снчала я конвертирую в гривны
+    # после конвертирую в USD
     def convert(self):
         i = 0
         if self.currency != "USD":
             for el in name_valut:
                 if el.text == self.currency:
                     try:
-                        grn = self.amount*exchange_rates[i]
-                        self.amount = grn/exchange_rates[7]
+                        grn = self.amount * exchange_rates[i]
+                        self.amount = grn / exchange_rates[7]
                         self.amount = toFixed(self.amount)
                         self.currency = "USD"
                         return self
                     except:
                         print("Ошибка переобраз0вания типов")
                         exit(2)
-                i+=1
+                i += 1
         else:
             return None
 
-    #метод конвертирует валюты которые не были доларами США(USD), поэтому после использования метода и повторного
-    #принта слагаемых они уже будут конертированы в USD
+    # метод конвертирует валюты которые не были доларами США(USD), поэтому после использования метода и повторного
+    # принта слагаемых они уже будут конертированы в USD
     def __add__(self, other):
         if isinstance(other, Price):
             if self.currency == "USD" and other.currency == "USD":
@@ -79,7 +86,7 @@ class Price:
                 return "{0} {1}".format(res, self.currency)
 
 
-a1 = Price(100,"DKK")
+a1 = Price(100, "DKK")
 a2 = Price(100, "HKD")
 
-print(a1+a2)
+print(a1 + a2)
