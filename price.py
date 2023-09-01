@@ -6,7 +6,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-
+#функция уменьшает количество чисел после запятой в float
 def toFixed(numObj, digits=2):
     return float(f"{numObj:.{digits}f}")
 
