@@ -12,7 +12,7 @@ def toFixed(numObj, digits=2):
     return float(f"{numObj:.{digits}f}")
 
 
-# Парсер который берет текущий курс валют из сайта
+# Парсер который берет текущий курс валют тносительно гривны из сайта
 url = "https://bank.gov.ua/ua/markets/exchangerates"
 
 data = requests.get(url)
@@ -90,6 +90,9 @@ class Price:
                 other.convert()
                 res = self.amount + other.amount
                 return "{0} {1}".format(res, self.currency)
+        else:
+            print("объект other не является объектом класса Price")
+            exit(3)
 
 
 a1 = Price(100, "DKK")
