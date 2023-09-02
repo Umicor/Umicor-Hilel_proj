@@ -55,8 +55,10 @@ class Price:
             for el in name_valut:
                 if el.text == self.currency:
                     try:
-                        grn = self.amount * exchange_rates[i]
+                        grn = self.amount / exchange_rates[i]
+
                         self.amount = grn / exchange_rates[7]
+
                         self.amount = toFixed(self.amount)
                         self.currency = "USD"
                         return self
@@ -94,5 +96,6 @@ class Price:
 
 a1 = Price(100, "DKK")
 a2 = Price(100, "HKD")
+a3 = Price(500,"RUB")
 
-print(a1 + a2)
+print(a3.convert())
