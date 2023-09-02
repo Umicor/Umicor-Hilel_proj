@@ -6,11 +6,9 @@
 import requests
 from bs4 import BeautifulSoup
 
-
 # функция уменьшает количество чисел после запятой в float
 def toFixed(numObj, digits=2):
     return float(f"{numObj:.{digits}f}")
-
 
 # Парсер который берет текущий курс валют тносительно гривны из сайта
 url = "https://bank.gov.ua/ua/markets/exchangerates"
@@ -93,7 +91,6 @@ class Price:
         else:
             print("объект other не является объектом класса Price")
             exit(3)
-
 
 a1 = Price(100, "DKK")
 a2 = Price(100, "HKD")
