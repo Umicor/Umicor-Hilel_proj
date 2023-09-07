@@ -1,12 +1,12 @@
 from abc import ABC, abstractmethod
-
-
+#абстрактный класс
 class post_in_social_chanels_machine(ABC):
     @abstractmethod
     def post_a_message(self):
         pass
 
 
+#Три класса которые "выкладвают пост" в зависимости от со сети
 class Youtube_post_machine(post_in_social_chanels_machine):
     def __init__(self, message: dict):
         self.message = message
@@ -14,7 +14,6 @@ class Youtube_post_machine(post_in_social_chanels_machine):
     def post_a_message(self):
         print("___Post in YouTube___")
         process_schedule(self)
-
 
 class Facebook_post_machine(post_in_social_chanels_machine):
     def __init__(self, massage: dict):
@@ -24,7 +23,6 @@ class Facebook_post_machine(post_in_social_chanels_machine):
         print("___Post in Facebook___")
         process_schedule(self)
 
-
 class Twitter_post_machine(post_in_social_chanels_machine):
     def __init__(self, message: dict):
         self.message = message
@@ -33,7 +31,7 @@ class Twitter_post_machine(post_in_social_chanels_machine):
         print("___Post in Twitter___")
         process_schedule(self)
 
-
+#функция которая проверяет время для постов (вместо time() использовал обычне целочисленые значения)
 def process_schedule(post: post_in_social_chanels_machine) -> None:
     if isinstance(post, post_in_social_chanels_machine):
         if 14.30 >= float(list(post.message.keys())[0]):
