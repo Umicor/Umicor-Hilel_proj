@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 #абстрактный класс
 class post_in_social_chanels_machine(ABC):
+    def __init__(self, message: dict):
+        self.message = message
     @abstractmethod
     def post_a_message(self):
         pass
@@ -8,25 +10,16 @@ class post_in_social_chanels_machine(ABC):
 
 #Три класса которые "выкладвают пост" в зависимости от со сети
 class Youtube_post_machine(post_in_social_chanels_machine):
-    def __init__(self, message: dict):
-        self.message = message
-
     def post_a_message(self):
         print("___Post in YouTube___")
         process_schedule(self)
 
 class Facebook_post_machine(post_in_social_chanels_machine):
-    def __init__(self, massage: dict):
-        self.massage = massage
-
     def post_a_message(self):
         print("___Post in Facebook___")
         process_schedule(self)
 
 class Twitter_post_machine(post_in_social_chanels_machine):
-    def __init__(self, message: dict):
-        self.message = message
-
     def post_a_message(self):
         print("___Post in Twitter___")
         process_schedule(self)
